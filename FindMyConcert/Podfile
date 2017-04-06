@@ -1,0 +1,10 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '9.0'
+use_frameworks!
+project '/Users/ntorretti/git/hackathon/find-my-concert/FindMyConcert/ios/FindMyConcert.xcodeproj'
+
+
+target 'FindMyConcert' do
+  use_frameworks!
+  pod 'Google/SignIn'
+end
