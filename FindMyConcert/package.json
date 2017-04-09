@@ -8,8 +8,9 @@
   },
   "dependencies": {
     "buffer": "^5.0.6",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "react": "16.0.0-alpha.6",
-    "react-game-kit": "0.0.2",
     "react-native": "0.43.1"
   },
   "devDependencies": {

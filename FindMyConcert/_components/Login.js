@@ -70,7 +70,7 @@ export default class Login extends Component {
       <View style={styles.container}>
         <Image 
           style={styles.logo}
-          source={require('./img/Octocat.png')}
+          source={require('../img/Octocat.png')}
         />
         <Text style={styles.heading}>
           Github Browser
