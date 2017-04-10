@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, ListView, StyleSheet, ActivityIndicator, Image } from 'react-native';
+import { View, Text, ListView, StyleSheet, ActivityIndicator, Image, TouchableHighlight } from 'react-native';
 import AuthService from './AuthService';
 import moment from 'moment';
+import PushPayload from './PushPayload'
 
 export default class Feed extends Component {
   constructor(props) {
@@ -47,29 +48,43 @@ export default class Feed extends Component {
     })
   }
 
+  pressRow(rowData) {
+    this.props.navigator.push({
+      title: 'Push Event',
+      component: PushPayload,
+      passProps: {
+        pushEvent: rowData
+      }
+    })
+  }
+
   renderRow(rowData) {
-    console.log('!!!', rowData);
     return(
-      <View style={styles.rowView}>
-         <Image
-          source={{uri: rowData.actor.avatar_url}}
-          style={styles.profileImg}
-          />
-          <View style={styles.rowItem}>
-            <Text style={styles.rowText}>
-              {moment(rowData.created_at).fromNow()}
-            </Text>
-            <Text style={styles.rowText}>
-              {rowData.actor.login} pushed to
-            </Text>
-            <Text style={styles.rowText}>
-              {rowData.payload.ref.replace('refs/heads/', '')}
-            </Text>
-            <Text style={styles.rowText}>
-              at {rowData.repo.name}
-            </Text>
-          </View>
-      </View>
+      <TouchableHighlight
+        onPress={() => this.pressRow(rowData)}
+        underlayColor='#DDD'
+      >
+        <View style={styles.rowView}>
+          <Image
+            source={{uri: rowData.actor.avatar_url}}
+            style={styles.profileImg}
+            />
+            <View style={styles.rowItem}>
+              <Text style={styles.rowText}>
+                {moment(rowData.created_at).fromNow()}
+              </Text>
+              <Text style={styles.rowText}>
+                {rowData.actor.login} pushed to
+              </Text>
+              <Text style={styles.rowText}>
+                {rowData.payload.ref.replace('refs/heads/', '')}
+              </Text>
+              <Text style={styles.rowText}>
+                at {rowData.repo.name}
+              </Text>
+            </View>
+        </View>
+      </TouchableHighlight>
     )
   }
 
@@ -86,6 +101,9 @@ export default class Feed extends Component {
     }
     return(
       <View style={styles.viewContainer}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>Feed</Text>
+        </View>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderRow.bind(this)}
@@ -107,8 +125,6 @@ let styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 20,
     alignItems: 'center',
-    borderColor: '#D7D7D7',
-    borderBottomWidth: 1
   },
   spinnerView: {
     flex: 1,
@@ -122,7 +138,15 @@ let styles = StyleSheet.create({
   rowItem: {
     paddingLeft: 20
   },
-  rowText: {
-    backgroundColor: '#FFF'
+  headerText: {
+    fontWeight: '600',
+    backgroundColor: '#FFF',
+    borderBottomWidth: 1,
+    borderColor: '#D7D7D7',
+  },
+  headerContainer: {
+    backgroundColor: '#FFF',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })

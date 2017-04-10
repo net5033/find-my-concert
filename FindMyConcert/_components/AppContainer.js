@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TabBarIOS } from 'react-native';
+import { View, Text, StyleSheet, TabBarIOS, NavigatorIOS } from 'react-native';
 import Feed from './Feed';
 
 export default class AppContainer extends Component {
@@ -19,7 +19,13 @@ export default class AppContainer extends Component {
           icon={require('../img/inbox.png')}
           onPress={() => this.setState({ selectedTab: 'feed' })}
         >
-          <Feed />
+          <NavigatorIOS
+            style={styles.navigator}
+            initialRoute={{
+              component: Feed,
+              title: 'Feed'
+            }}
+          />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title="Search"
@@ -45,5 +51,8 @@ let styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10
+  },
+  navigator: {
+    flex: 1
   }
 });
